@@ -38,14 +38,14 @@ export default function App() {
           tabBarIcon: ({ focused, color, size }) => {
             let iconName;
 
-            if (route.name === 'HomeStack') {
-              iconName = focused ? 'ios-information-circle' : 'ios-information-circle-outline';
+            if (route.name === 'Home') {
+              iconName = focused ? 'home-sharp' : 'home-outline';
             } else if (route.name === 'WishList') {
-              iconName = focused ? 'alarm-sharp' : 'alarm-outline';
+              iconName = focused ? 'heart-sharp' : 'heart-outline';
             } else if (route.name === 'Cart') {
-              iconName = focused ? 'airplane-sharp' : 'airplane-outline';
+              iconName = focused ? 'lock-closed-sharp' : 'lock-closed-outline';
             } else if (route.name === 'Me') {
-              iconName = focused ? 'airplane-sharp' : 'airplane-outline';
+              iconName = focused ? 'md-person-sharp' : 'md-person-outline';
             }
 
             // You can return any component that you like here!
@@ -57,7 +57,7 @@ export default function App() {
           inactiveTintColor: 'gray',
         }}
       >
-        <Tab.Screen name="HomeStack" component={HomeStack} />
+        <Tab.Screen name="Home" component={HomeStack} />
         <Tab.Screen name="WishList" component={WishList} />
         <Tab.Screen name="Cart" component={Cart} />
         <Tab.Screen name="Me" component={Me} />
