@@ -29,7 +29,7 @@ export default function Home({navigation}) {
         </TouchableOpacity>
       </View>
       <Text style = {styles.c}>All Special Offers(12)</Text>
-      <TouchableOpacity onPress={() => navigation.navigate('ProducList')}>
+      <TouchableOpacity onPress={() => navigation.navigate('ProductList')}>
       <Image
         style={styles.d}
         source={{
