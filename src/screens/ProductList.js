@@ -1,7 +1,12 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import { View, Text, TouchableOpacity, FlatList, Image, StyleSheet } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import axios from 'axios'
+import { getProduct } from '../services/Api';
+import {getImage} from '../utils'
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 
 // const DATA = [
 //   {
@@ -20,13 +25,27 @@ const DATA = Array(10).fill('').map((e, i) => ({
   heart: i % 2 === 0
 }))
 
-export default function ProductList() {
+export default function ProductList({navigation}) {
+    const [product, setProduct] = useState()
+    useEffect(() => {
+        //alert('hello')
+        const getApiproduct = async () => {
+            const result = await getProduct()
+            console.log('result', result)
+            setProduct(result.data.data)
+        }
+
+   getApiproduct() 
+}, [])
+
   const renderItem = ({ item }) => (
     <View style={{ width: '45%', }}>
+      <TouchableOpacity onPress={()=> navigation.navigate('Detail')}>
       <Image
         style={styles.imgStyle}
-        source={{ uri: item.photo, }}
+        source={{ uri: getImage(item.images?.[0]) }}
       />
+      </TouchableOpacity>
       <View style={styles.rowPrice}>
         <Text>{item.price}</Text>
         <Ionicons name="heart" size={30} color={item.heart ? 'red' : 'grey'} />
@@ -34,6 +53,7 @@ export default function ProductList() {
       <Text>{item.name}</Text>
     </View>
   );
+  
   return (
     <View>
       <View style={{ flexDirection: 'row', borderBottomWidth: 1, borderBottomColor: 'grey' }}>
@@ -47,10 +67,10 @@ export default function ProductList() {
       </View>
       <Text style={{ textAlign: 'center', marginTop: 15, marginBottom: 20 }}>405 styles</Text>
       <FlatList
-        data={DATA}
+        data={product}
         numColumns={2}
         renderItem={renderItem}
-        keyExtractor={item => item.id}
+        keyExtractor={item => item._id?.toString()}
         columnWrapperStyle={{ justifyContent: 'space-around', marginBottom: 20, flex: 1 }}
         style={{ marginBottom: 100 }}
       />

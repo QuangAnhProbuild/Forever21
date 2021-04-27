@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
 import {StyleSheet, Text, View, TextInput, TouchableOpacity, TouchableWithoutFeedback} from 'react-native'
-export default class Login extends Component{
-    render(){
+export default function Login({navigation}){
         return(
             <View style={styles.container}>
                 <View style={styles.up}>
@@ -25,7 +24,9 @@ export default class Login extends Component{
            <Text style={styles.loginbuttontitle}> SIGN IN </Text>
            </TouchableOpacity>
         <Text style = {styles.abcd1}>Forgot Password?</Text>
-        <Text style = {styles.abcd2}>Don't have a Account?</Text>
+        <TouchableOpacity onPress={()=> navigation.navigate ('Join')}>
+            <Text style={{textDecorationLine: 'underline', textAlign:'center'}}>Don't have an account?</Text>
+        </TouchableOpacity>
         <View style={styles.down}>
               <Text>TOUCH ID SETTING </Text>
                 <Text>To turn on/off face ID, go to[My Account] > [Setting] > [Touch ID] > On/Off </Text>
@@ -33,7 +34,6 @@ export default class Login extends Component{
              </View>
         )
     }
-}
 const styles = StyleSheet.create({
     container:{
         justifyContent:'center',
@@ -52,19 +52,21 @@ const styles = StyleSheet.create({
           marginTop:190,
           marginLeft:10,
           marginRight:10,
+          backgroundColor:'rgba(255,255,255,0.2)'
     },
     title:{
         color: 'black',
         textAlign:'center',
         width: 400,
         fontSize: 23,
-        fontWeight:'bold'
+        fontWeight:'bold',
+        borderBottomWidth:0.5,
     },
     textInputContainer:{
         paddingHorizontal: 10,
         backgroundColor: 'rgba(255,255,255,0.2)',
         marginBottom:20,
-        borderWidth:0.8,
+        borderWidth:1,
         marginLeft:10,
         marginRight:10,
     },
@@ -94,9 +96,11 @@ const styles = StyleSheet.create({
     abcd1:{
         textAlign:'center',
         marginTop:20,
+        textDecorationLine: 'underline'
     },
     abcd2:{
         textAlign:'center',
         marginTop:30,
+        textDecorationLine: 'underline'
     }
 })

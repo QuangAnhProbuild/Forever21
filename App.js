@@ -13,7 +13,8 @@ import Detail from './src/screens/Detail'
 import WishList from './src/screens/WishList'
 import Cart from './src/screens/Cart'
 import Me from './src/screens/Me'
-
+import Join from './src/screens/Join'
+import Login from './src/screens/Login'
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
@@ -22,8 +23,13 @@ const HomeStack = () => {
   return (
     <Stack.Navigator initialRouteName="Home">
       <Stack.Screen name="Home" component={Home} />
-      <Stack.Screen name="Product" component={ProductList} />
+      <Stack.Screen name="ProductList" component={ProductList} />
       <Stack.Screen name="Detail" component={Detail} />
+      <Stack.Screen name="Join" component={Join} />
+      <Stack.Screen name="WishLish" component={WishList} />
+      <Stack.Screen name="Me" component={Me} />
+      <Stack.Screen name="Cart" component={Cart} />
+      <Stack.Screen name="Login" component={Login} />
     </Stack.Navigator>
   )
 }

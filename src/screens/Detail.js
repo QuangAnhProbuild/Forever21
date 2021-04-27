@@ -1,6 +1,8 @@
 import React from 'react'
 import { View, Text, TouchableOpacity, FlatList, Image, StyleSheet } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { NavigationContainer, StackActions } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 
 const DATA = [
   {
@@ -8,7 +10,7 @@ const DATA = [
   }
 ]
 
-export default function Detail() {
+export default function Detail({}) {
     const renderItem = ({ item }) => (
         <View style={{ width: '100%', }}>
             <Image
@@ -29,11 +31,11 @@ export default function Detail() {
           />
           <View style={{ flexDirection: 'row', borderBottomWidth: 1, borderBottomColor: 'white' }}>
           <Ionicons name="ios-ellipse-outline" size={40} color="black" />
-        <TouchableOpacity style={styles.a}>
+          <TouchableOpacity style={styles.a}>
           <Text style={styles.b}>ADD TO CART</Text>
-        </TouchableOpacity>
-        <Ionicons name="heart-outline" size={40} color="White" />
-        </View>
+          </TouchableOpacity>
+          <Ionicons name="heart-outline" size={40} color="White" />
+          </View>
         </View>
       )
     }
