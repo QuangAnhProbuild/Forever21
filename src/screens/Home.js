@@ -7,11 +7,11 @@ import { createStackNavigator } from '@react-navigation/stack';
 export default function Home({navigation}) {
   return(
     <ScrollView>
-      <View style = {{flexDirection:'row', flex:1, marginBottom:15}}>
-        <TouchableOpacity style ={{marginRight:100}}>
+      <View style = {{flexDirection:'row',height:50}}>
+        <TouchableOpacity style ={{alignSelf:'center'}}>
           <Ionicons style={{}} name ="reorder-three-outline" size={30} color="black" />
         </TouchableOpacity>
-        <Text style = {{fontSize:22}}>FOREVER 21</Text>
+        <Text style = {{fontSize:22, alignSelf:'center',marginLeft:100}}>FOREVER 21</Text>
       </View>
       <View style={styles.searchSection}>
         <Ionicons style={styles.searchIcon} name="ios-search" size={20} color="#000"/>
