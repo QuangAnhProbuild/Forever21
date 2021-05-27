@@ -1,63 +1,70 @@
 import React from 'react'
-import { View, Text, TouchableOpacity, FlatList, Image, StyleSheet } from 'react-native'
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import { NavigationContainer, StackActions } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import { View, Text, Image, TouchableOpacity } from 'react-native'
+import Ionicons from 'react-native-vector-icons/Ionicons'
+import { useDispatch, useSelector } from "react-redux";
+import { getImage } from '../utils';
+const sizes = ['S', "M", "L", 'XL', 'XXL']
+export default function DetailScreen({ route, navigation }) {
+  const dispatch = useDispatch();
+  const { detail } = route.params;
 
-const DATA = [
-  {
-    photo: 'https://www.forever21.com/dw/image/v2/BFKH_PRD/on/demandware.static/-/Sites-f21-master-catalog/default/dw91f2d4aa/1_front_750/00430045-03.jpg?sw=400&sh=600',
+  // const onAddCart = () => dispatch({ type: 'ADD_QUANTITY', data: item })
+  const onAddCart = () => {
+    dispatch({ type: 'ADD_CART', detail: detail })
   }
-]
+  return (
+    <View>
+      {/* <Image source={{ uri: getImage(detail?.images?.[0]) }}
+        style={{ width: '100%', height: 360, resizeMode: 'contain' }} /> */}
+      <Image source={{ uri: detail?.img }}
+        style={{ width: '100%', height: 400, resizeMode: 'contain', marginTop:30 }} />
+      <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+        <Text style={{ fontWeight: 'bold', fontSize: 20 }}>{detail.name}</Text>
+        <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 10 }}>
+          <Text style={{
+            marginRight: 5,
+            fontWeight: 'bold'
+          }}>{detail?.price}</Text>
+          <Text style={{ textDecorationLine: 'line-through', color: 'grey' }}>1000k</Text>
+          <Text style={{ textAlign:'center',borderWidth: 1, padding: 5, marginLeft: 10, borderRadius: 5, backgroundColor: 'yellow', borderColor: 'transparent' }}>
+            50%
+          </Text>
+        </View>
+        <View style={{
+          flexDirection: 'row',
+          justifyContent: 'space-around',
+          width: '100%',
+          paddingHorizontal: 40,
+          marginTop: 10
+        }}>
+          {/* {sizes.map((e, i) => {
+            const isChecked = e === detail?.size?.[0]
+            return (
+              <TouchableOpacity key={i}
+                style={{
+                  borderRadius: 20, backgroundColor: isChecked ? 'grey' : 'white',
+                  borderWidth: 1, padding: 2, height: 40, width: 40, justifyContent: 'center', alignItems: 'center'
+                }}
+              >
+                <Text style={{ fontSize: 10 }}>{e}</Text>
+              </TouchableOpacity>
+            )
+          })} */}
+        </View>
+        <TouchableOpacity
+          onPress={onAddCart}
+          style={{
+            backgroundColor: 'black',
+            marginTop: 15, width: '60%', borderWidth: 1,
+            borderRadius: 20, paddingVertical: 12,
+            borderColor: 'transparent',
+            justifyContent: 'center',
+            alignItems: 'center'
+          }}>
+          <Text style={{ color: '#fff', fontWeight: 'bold' }}>ADD TO BAG</Text>
+        </TouchableOpacity>
 
-export default function Detail({navigation}) {
-    const renderItem = ({ item }) => (
-        <View style={{ width: '100%', }}>
-            <Image
-        style={styles.imgStyle}
-        source={{ uri: item.photo, }}
-        />
-        </View>
-    );
-    return (
-        <View>
-          <FlatList
-            data={DATA}
-            numColumns={2}
-            renderItem={renderItem}
-            keyExtractor={item => item.id}
-            columnWrapperStyle={{ justifyContent: 'space-around', marginBottom: 20, flex: 1 }}
-            style={{ }}
-          />
-          <View style={{ flexDirection: 'row', borderBottomWidth: 1, borderBottomColor: 'white' }}>
-          <Ionicons name="ios-ellipse-outline" size={40} color="black" />
-          <TouchableOpacity style={styles.a}>
-          <TouchableOpacity onPress={()=> navigation.navigate('Cart')}>
-            <Text style={{color:'white'}}>ADD TO CARD</Text>
-          </TouchableOpacity>
-          </TouchableOpacity>
-          <Ionicons name="heart-outline" size={40} color="White" />
-          </View>
-        </View>
-      )
-    }
-    
-    const styles = StyleSheet.create({
-      imgStyle: {
-        height: 550,
-        width: 'auto',
-      },
-      a:{ 
-        flex:1,
-        justifyContent: 'center', 
-        alignItems: 'center',
-        backgroundColor:'black',
-        width:220,
-        height:50,
-        marginLeft:20,
-        marginRight:20,
-      },
-      b:{
-          color:'#ffffff'
-      }
-    });
+      </View>
+    </View>
+  )
+}

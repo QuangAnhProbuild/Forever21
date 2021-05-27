@@ -41,7 +41,7 @@ export default function Home({navigation}) {
       <Image
         style={{height:250, width:'auto', marginTop:10}}
         source={{
-          uri: 'https://scontent.fhan14-1.fna.fbcdn.net/v/t1.6435-9/127229211_235661094583618_7063575494560435113_n.jpg?_nc_cat=105&ccb=1-3&_nc_sid=8bfeb9&_nc_ohc=okYt0VXg74EAX9KyqOF&_nc_ht=scontent.fhan14-1.fna&oh=3c692b40f9c07256b35fd844bf93f4a1&oe=60ABB2E8',
+          uri: 'https://scontent.fpnh22-1.fna.fbcdn.net/v/t1.6435-9/178396633_823959741833943_9091597728023307618_n.jpg?_nc_cat=107&ccb=1-3&_nc_sid=09cbfe&_nc_ohc=Rut3f4WDI8MAX-rjMOD&_nc_ht=scontent.fpnh22-1.fna&oh=d4010a890e402ca6040bde8562fe95e8&oe=60D19930',
         }}
       />
       </TouchableOpacity>

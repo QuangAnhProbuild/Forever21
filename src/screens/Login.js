@@ -29,7 +29,7 @@ export default function Login({navigation}){
         </TouchableOpacity>
         <View style={styles.down}>
               <Text>TOUCH ID SETTING </Text>
-                <Text>To turn on/off face ID, go to[My Account] > [Setting] > [Touch ID] > On/Off </Text>
+                <Text>To turn on/off face ID, go to[My Account] - [Setting] - [Touch ID] - On/Off </Text>
             </View>
              </View>
         )

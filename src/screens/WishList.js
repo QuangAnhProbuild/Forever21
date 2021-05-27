@@ -1,62 +1,106 @@
-import React from 'react'
-import { View, Text, TouchableOpacity, FlatList, Image, StyleSheet } from 'react-native'
-import { ScrollView } from 'react-native-gesture-handler';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import React, { useState } from 'react'
+import { View, Text, TouchableOpacity, StyleSheet, FlatList, Image } from 'react-native'
+import { useNavigation } from '@react-navigation/native';
+import Ionicons from 'react-native-vector-icons/Ionicons'
+// import { Colors, Metrics } from '../themes';
+import CartView from '../components/CardView'
+import { useDispatch, useSelector } from "react-redux";
 
-export default function Cart() {
-    return(
-        <View>
-            <Text style={{fontWeight:'bold',fontSize:18,marginTop:10,justifyContent:'center',textAlign:'center'}}>WISHLISH</Text>
-            <Text style = {{borderTopWidth:0.5,marginTop:10}}/>
-            <Text style = {styles.a}>1 Item(s)</Text>
-            <View style ={styles.b}>
-                <View>
-                <Image
-                    style={styles.c}
-                    source={{
-                    uri: 'https://scontent.fhan14-1.fna.fbcdn.net/v/t1.6435-9/165307715_308550240628036_7131228911794356840_n.jpg?_nc_cat=102&ccb=1-3&_nc_sid=8bfeb9&_nc_ohc=nTDf7o9dv7AAX9H9dkH&tn=AdwrbZkqVvZlGPEM&_nc_ht=scontent.fhan14-1.fna&oh=9b3086a3dc60cd92bbe58d9b23852f14&oe=60AE6C4A',
-                    }}
-                />
+// const images = [
+//   'https://www.forever21.com/images/default_330/00421842-01.jpg',
+//   'https://www.forever21.com/images/default_330/00410895-03.jpg',
+//   'https://www.forever21.com/images/default_330/00412718-02.jpg',
+//   'https://www.forever21.com/images/default_330/00415030-01.jpg',
+//   'https://www.forever21.com/images/default_330/00414874-01.jpg'
+// ]
+// const data = Array(10).fill('').map((e, i) => ({ id: i + 1, image: images[i] || images[0], name: `item ${i}`, price: '100.000', star: 4 }))
+
+export default function CartScreen() {
+  const dispatch = useDispatch();
+
+  const data = useSelector((store) => store.cartReducer.cart);
+
+  const onRemoveAll = () => dispatch({ type: 'REMOVE_ALL' })
+
+  const onRemoveItem = (item) => () => dispatch({ type: 'REMOVE_ITEM', data: item })
+
+  const onChangeQuantity = (type, item) => () => {
+    // dispatch({ type: 'CHANGE_QUANTITY', data: item, quantityType: type })
+    if (type === 'increase') {
+      dispatch({ type: 'ADD_CART', detail: item })
+    } else {
+      dispatch({ type: 'REDUCE_ITEM', detail: item })
+    }
+  }
+
+  const renderItem = ({ item }) => {
+    return (
+      <CartView style={{ flex: 1, margin: 5, flexDirection: 'row' }}>
+        <Image source={{ uri: item.img }} style={{ width: 100, height: 100, }} />
+        <View style={{ marginLeft: 5, marginVertical: 10, width: '100%', flex: 1, marginLeft: 10 }}>
+          <Text style={{ fontSize: 17, }}>{item.name}</Text>
+          <View style={{ flexDirection: 'row', alignItems: 'center', flex: 1, width: '100%' }}>
+            <View style={{ flex: 1, }}>
+              <View style={{ flexDirection: 'row' }}>
+                <Text style={{ fontSize: 19, fontWeight: 'bold', marginRight: 10 }}>{item.price}</Text>
+                <Text style={{ fontSize: 19, textDecorationLine: 'line-through', textDecorationStyle: 'solid' }}>{item.price}</Text>
+              </View>
+              <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                <Text style={{ textAlign: 'center', width: 50, borderWidth: 1, padding: 5, borderRadius: 5, backgroundColor: 'yellow', borderColor: 'transparent' }}>
+                  50%
+                </Text>
+                <View style={{ flexDirection: 'row', marginRight: 10 }}>
+                  <TouchableOpacity onPress={onChangeQuantity('reduce', item)}>
+                    <Ionicons name="md-remove" size={25} color={'black'} />
+                  </TouchableOpacity>
+                  <Text style={{ fontSize: 20, marginHorizontal: 10 }}>{item?.quantity}</Text>
+                  <TouchableOpacity onPress={onChangeQuantity('increase', item)}>
+                    <Ionicons name="add-outline" size={25} color={'black'} />
+                  </TouchableOpacity>
                 </View>
-                <View style={{marginTop:20,marginLeft:10}}>
-                <View style={{flexDirection:'row',justifyContent:'space-between'}}>
-                    <Text style ={{fontSize:15, fontWeight:'bold'}}>đ600,900</Text>
-                    <Ionicons name="md-ellipsis-vertical" size={30} color="#000"/>
-                </View>
-                <Text style={{color:'#A4A4A4',fontSize:12,fontWeight:'bold'}}>Frayed Distressed Denim Shorts</Text>
-                <View style = {{flexDirection:'row',marginTop:70}}>
-                    <TouchableOpacity style = {{flexDirection:'row', marginRight:15}}>
-                        <Text style = {{marginRight:15}}>LIGHT DENIM</Text>
-                        <Ionicons name="chevron-down" size={25} color="black" />
-                    </TouchableOpacity>
-                    <TouchableOpacity style = {{flexDirection:'row'}}>
-                        <Text style = {{marginRight:50}}>29</Text>
-                        <Ionicons name="chevron-down" size={25} color="black" />
-                    </TouchableOpacity>
-                </View>
-                <TouchableOpacity style = {{flexDirection:'row',marginTop:10}}>
-                    <Text>QTY: 1</Text>
-                    <Ionicons name="chevron-down" size={25} color="black" />
-                </TouchableOpacity>
-                </View>
+              </View>
             </View>
-            <Text style ={{borderBottomWidth:0.5}}></Text>
+            <TouchableOpacity onPress={onRemoveItem(item)}>
+              <Text>Delete</Text>
+            </TouchableOpacity>
+          </View>
         </View>
-    )
+      </CartView>
+    );
+  };
+
+
+  return (
+    <View>
+      <FlatList
+        style={{ backgroundColor: 'grey' }}
+        data={data}
+        renderItem={renderItem}
+        keyExtractor={(item) => item._id?.toString()}
+      // extraData={}
+      />
+      {data?.length ?
+        <TouchableOpacity style={{ marginTop: 10 }} onPress={onRemoveAll}>
+          <Text>
+            Remove all
+        </Text>
+        </TouchableOpacity> :
+        <View style={{ justifyContent: 'center', alignItems: 'center', height: '100%' }}>
+          <Text>Nothing here!</Text>
+        </View>
+      }
+
+    </View>
+  )
 }
+
 const styles = StyleSheet.create({
-    a:{
-        fontWeight:'bold',
-        color:'#A4A4A4',
-        textAlign:'center'
-    },
-    b:{
-        flexDirection:'row',
-    },
-    c:{
-        height:200,
-        width:120,
-        marginLeft:20,
-        marginTop:20,
-    },
-})
+  wishlistIcon: {
+    marginRight: 5,
+    position: 'absolute',
+    top: 5,
+    right: 5,
+    zIndex: 1
+  },
+
+});
