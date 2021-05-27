@@ -61,7 +61,7 @@ export default function CartScreen() {
               </View>
             </View>
             <TouchableOpacity onPress={onRemoveItem(item)}>
-              <Text>Delet</Text>
+              <Text>Delete</Text>
             </TouchableOpacity>
           </View>
         </View>
